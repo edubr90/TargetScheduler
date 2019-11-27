@@ -1,0 +1,46 @@
+<h1>Lista de Agendamentos</h1>
+
+<div>
+  <p>
+    <a [routerLink]="['/adicionarNovo']">Criar Novo Agendamento</a>
+  </p>
+</div>
+
+<div style="margin: 0 0 10px 0" *ngIf="model != undefined">
+  <div>
+    <input class="form-control" type="text" [(ngModel)]="termoBusca" style="width: 50%" placeholder="Digite os termos de busca para pesquisar os seus agendamentos">
+    <button (click)="getPesquisa()">Ok</button>
+  </div>
+</div>
+
+<div *ngIf="model == undefined">
+  <p>Não foi encontrado nenhum agendamento!</p>
+</div>
+
+<table class='table' *ngIf="model != undefined">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Responsável</th>
+      <th>Data Início</th>
+      <th>Data Término</th>
+      <th>Tipo</th>
+      <th>Observação</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let agenda of model">
+      <td>{{ agenda.nome }}</td>
+      <td>{{ agenda.pessoa.nome }}</td>
+      <td>{{ agenda.inicio | normalizarDateTime }}</td>
+      <td>{{ agenda.termino | normalizarDateTime }}</td>
+      <td>{{ agenda.tipo == 0 ? 'Novo' : 'Retorno' }}</td>
+      <td>{{ agenda.observacao }}</td>
+      <td>
+      <td>
+        <a [routerLink]="['/editarAgenda/', agenda.id]">Editar</a> |
+        <a [routerLink]="" (click)="delete(agenda.id)">Remover</a>
+      </td>
+    </tr>
+  </tbody>
+</table>

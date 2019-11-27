@@ -1,0 +1,96 @@
+<h1>{{title}}</h1>
+<h3>Agendamento</h3>
+<hr />
+<form [formGroup]="formularioAgenda" (ngSubmit)="salvarAgendamento()" #formDir="ngForm" novalidate>
+
+  <div class="form-group row">
+    <label class=" control-label col-md-12">Nome*</label>
+    <div class="col-md-4">
+      <input class="form-control" type="text" formControlName="Nome" [(ngModel)]="agenda.nome" required>
+    </div>
+    <span class="text-danger" *ngIf="f.Nome.errors && formDir.submitted">
+      Nome é obrigatório.
+    </span>
+  </div>
+
+  <div class="form-group row">
+    <label class=" control-label col-md-12">Responsavel*</label>
+    <div class="col-md-4">
+      <input class="form-control" type="text" [(ngModel)]="agenda.pessoa.nome" formControlName="Responsavel">
+    </div>
+    <span class="text-danger" *ngIf="f.Responsavel.errors && formDir.submitted">
+      Nome do responsável é obrigatório.
+    </span>
+  </div>
+
+  <div class="form-group row">
+    <label class=" control-label col-md-12">Data de Nascimento do responsavel*</label>
+    <div class="col-md-4">
+      <!--<input class="form-control" type="text" [(ngModel)]="agenda.pessoa.dataNascimento" formControlName="DataNascimento">-->
+      <label>
+        <input [owlDateTimeTrigger]="dtNasc" [owlDateTime]="dtNasc" class="form-control" type="text" [(ngModel)]="agenda.pessoa.dataNascimento" formControlName="DataNascimento" (focus)="acionarCalendar()" (keydown)="acionarCalendar()">
+        <owl-date-time #dtNasc [pickerType]="'calendar'"></owl-date-time>
+      </label>
+    </div>
+    <span class="text-danger" *ngIf="f.DataNascimento.errors && formDir.submitted"  >
+      Favor informar a data de nascimento.
+    </span>
+  </div>
+
+  <div class="form-group row">
+    <label class=" control-label col-md-12">Início Agendamento*</label>
+    <div class="col-md-4">
+      <!--<app-date-time-picker formControlName="Inicio" name="Inicio" [(ngModel)]="agenda.inicio"></app-date-time-picker>-->
+      <!--<input class="form-control" type="text" [(ngModel)]="agenda.inicio" formControlName="Inicio">-->
+      <label>
+        <input [owlDateTimeTrigger]="dtIni" [owlDateTime]="dtIni" class="form-control" type="text" [(ngModel)]="agenda.inicio" formControlName="Inicio" (focus)="acionarCalendar()" (keydown)="acionarCalendar()">
+        <owl-date-time #dtIni></owl-date-time>
+      </label>
+    </div>
+    <span class="text-danger" *ngIf="f.Inicio.errors && formDir.submitted">
+      Favor informar a data de início para o agendamento.
+    </span>
+  </div>
+
+  <div class="form-group row">
+    <label class=" control-label col-md-12">Término Agendamento*</label>
+    <div class="col-md-4">
+      <!--<input class="form-control" type="text" [(ngModel)]="agenda.termino" formControlName="Termino">-->
+      <label>
+        <input [owlDateTimeTrigger]="dtFim" [owlDateTime]="dtFim" class="form-control" type="text" [(ngModel)]="agenda.termino" formControlName="Termino" (focus)="acionarCalendar()" (keydown)="acionarCalendar()">
+        <owl-date-time #dtFim></owl-date-time>
+      </label>
+    </div>
+    <span class="text-danger" *ngIf="f.Termino.errors && formDir.submitted">
+      Favor informar a data de término para o agendamento.
+    </span>
+  </div>
+
+  <div class="form-group row">
+    <label class="control-label col-md-12" for="City">Tipo</label>
+    <div class="col-md-4">
+      <select class="form-control" data-val="true" formControlName="Tipo" [(ngModel)]="agenda.tipo">
+        <option value="">--Selecione o tipo--</option>
+        <option *ngFor="let tipo of tipoagenda | keyvalue"
+                value={{tipo.key}}>
+          {{tipo.value}}
+        </option>
+      </select>
+    </div>
+    <span class="text-danger" *ngIf="f.Tipo.errors && formDir.submitted">
+      O Tipo de Agendamento é obrigatório.
+    </span>
+  </div>
+
+  <div class="form-group row">
+    <label class="control-label col-md-12">Observação</label>
+    <div class="col-md-4">
+      <textarea [(ngModel)]="agenda.observacao" class="form-control" formControlName="Observacao">{{agenda.Observacao}}</textarea>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-default">Salvar</button>
+    <button class="btn" (click)="cancelar()">Cancelar</button>
+  </div>
+</form>
