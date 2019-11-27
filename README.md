@@ -9,3 +9,4 @@ O projeto TargetScheduler.Service é responsável por rodar o servidor da WEB Ap
 
 Na raiz do projeto, se encontra o arquivo scriptSQL contendo os scripts de criação das tabelas no banco de dados.
 
+Att.
